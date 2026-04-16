@@ -10,9 +10,7 @@
             --purple-prime: #6c5ce7;
             --glass-white: rgba(255, 255, 255, 0.45);
         }
-
-        html { scroll-behavior: smooth; } /* لجعل التنقل بين الأزرار ناعماً */
-
+        html { scroll-behavior: smooth; }
         body {
             background: var(--bg-gradient);
             min-height: 100vh;
@@ -21,8 +19,8 @@
             align-items: center;
             font-family: 'Quicksand', sans-serif;
             margin: 0;
+            overflow: hidden;
         }
-
         .main-layout {
             background: var(--glass-white);
             width: 94vw;
@@ -34,9 +32,7 @@
             display: grid;
             grid-template-columns: 80px 1fr;
             box-shadow: 0 25px 50px rgba(0,0,0,0.05);
-            overflow: hidden;
         }
-
         .side-nav {
             background: rgba(255, 255, 255, 0.2);
             display: flex;
@@ -46,21 +42,9 @@
             gap: 35px;
             border-right: 1px solid rgba(255,255,255,0.2);
         }
-
-        .side-nav a {
-            text-decoration: none;
-            font-size: 1.8rem;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .side-nav a:hover { transform: scale(1.2); }
-
-        .content-area {
-            padding: 30px 50px;
-            overflow-y: auto;
-        }
-
+        .nav-btn { font-size: 1.8rem; cursor: pointer; transition: 0.3s; text-decoration: none; }
+        .nav-btn:hover { transform: scale(1.2); }
+        .content-area { padding: 30px 50px; overflow-y: auto; }
         .input-group {
             background: rgba(255, 255, 255, 0.6);
             padding: 15px 20px;
@@ -68,106 +52,96 @@
             margin-bottom: 15px;
             border: 1px solid rgba(255,255,255,0.5);
         }
-
-        .action-btn {
-            background: var(--purple-prime);
-            color: white;
-            border: none;
-            padding: 14px 40px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 1rem;
-            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.2);
+        textarea, input {
+            width: 100%; border: none; background: transparent;
+            font-size: 1rem; outline: none; font-family: inherit;
         }
-
+        .action-btn {
+            background: var(--purple-prime); color: white; border: none;
+            padding: 14px 40px; border-radius: 50px; cursor: pointer;
+            font-weight: 600; box-shadow: 0 10px 20px rgba(108, 92, 231, 0.2);
+        }
         .vocab-card {
-            background: white;
-            padding: 20px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            color: var(--purple-prime);
-            font-weight: 700;
+            background: white; padding: 15px; border-radius: 15px;
+            text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            color: var(--purple-prime); font-weight: 700;
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
     <div class="main-layout">
         <aside class="side-nav">
-            <a href="#" title="Home">🌸</a>
-            <a href="#diary-section" title="Write">🖋️</a>
-            <a href="#vault-section" title="Vocabulary">💎</a>
-            <a href="#" onclick="alert('Settings coming soon! ⚙️')" title="Settings">⚙️</a>
+            <a href="#home" class="nav-btn">🌸</a>
+            <a href="#diary" class="nav-btn">🖋️</a>
+            <a href="#vault" class="nav-btn">💎</a>
+            <div class="nav-btn" onclick="location.reload()">⚙️</div>
         </aside>
 
         <main class="content-area">
             <h1 id="home">Bloom English 🌸</h1>
-            
-            <div id="diary-section">
+            <div id="diary">
                 <div class="input-group">
                     <label style="color:var(--purple-prime); font-weight:600;">🖋️ Arabic Thoughts</label>
-                    <textarea id="ar" style="width:100%; border:none; background:transparent; outline:none; font-family:inherit;" rows="2"></textarea>
+                    <textarea id="ar_input" rows="2"></textarea>
                 </div>
-
                 <div class="input-group">
                     <label style="color:var(--purple-prime); font-weight:600;">🇺🇸 English Attempt</label>
-                    <textarea id="en" style="width:100%; border:none; background:transparent; outline:none; font-family:inherit;" rows="2"></textarea>
+                    <textarea id="en_input" rows="2"></textarea>
                 </div>
-
                 <div class="input-group" style="background: rgba(108, 92, 231, 0.05);">
                     <label style="color:var(--purple-prime); font-weight:600;">✨ AI Correction</label>
-                    <textarea id="ai" style="width:100%; border:none; background:transparent; outline:none; font-family:inherit;" rows="2"></textarea>
+                    <textarea id="ai_input" rows="2"></textarea>
                 </div>
-
-                <button class="action-btn" onclick="saveAll()">Save Today's Progress ✨</button>
+                <button class="action-btn" onclick="saveData()">Save Today's Progress ✨</button>
             </div>
 
-            <div id="vault-section" style="margin-top: 60px;">
+            <div id="vault" style="margin-top: 60px; padding-bottom: 50px;">
                 <h2 style="color: #2d3436;">Vocabulary Vault 💎</h2>
                 <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                    <input type="text" id="word" placeholder="Word" style="padding:10px; border-radius:10px; border:none;">
-                    <input type="text" id="mean" placeholder="Meaning" style="padding:10px; border-radius:10px; border:none;">
-                    <button onclick="addCard()" style="background:var(--purple-prime); color:white; border:none; border-radius:10px; padding:10px 20px;">+</button>
+                    <input type="text" id="w_in" placeholder="Word" style="background:white; padding:10px; border-radius:10px;">
+                    <input type="text" id="m_in" placeholder="Meaning" style="background:white; padding:10px; border-radius:10px;">
+                    <button onclick="addVocab()" style="background:var(--purple-prime); color:white; border:none; border-radius:10px; padding:10px 20px;">+</button>
                 </div>
-                <div id="cardsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px;"></div>
+                <div id="cardsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px;"></div>
             </div>
         </main>
     </div>
 
     <script>
-        function saveAll() {
-            localStorage.setItem('bloom_ar', document.getElementById('ar').value);
-            localStorage.setItem('bloom_en', document.getElementById('en').value);
-            localStorage.setItem('bloom_ai', document.getElementById('ai').value);
-            alert("Saved successfully! 🌸");
+        // دالة حفظ البيانات
+        function saveData() {
+            localStorage.setItem('ar_data', document.getElementById('ar_input').value);
+            localStorage.setItem('en_data', document.getElementById('en_input').value);
+            localStorage.setItem('ai_data', document.getElementById('ai_input').value);
+            alert("Great job, Lamia! Everything is saved. 🌸");
         }
 
-        function addCard() {
-            const w = document.getElementById('word').value;
-            const m = document.getElementById('mean').value;
+        // دالة إضافة الكلمات
+        function addVocab() {
+            const w = document.getElementById('w_in').value;
+            const m = document.getElementById('m_in').value;
             if(!w || !m) return;
-            let cards = JSON.parse(localStorage.getItem('bloom_cards') || '[]');
+            let cards = JSON.parse(localStorage.getItem('my_cards') || '[]');
             cards.push({w, m});
-            localStorage.setItem('bloom_cards', JSON.stringify(cards));
-            render();
-            document.getElementById('word').value = '';
-            document.getElementById('mean').value = '';
+            localStorage.setItem('my_cards', JSON.stringify(cards));
+            renderCards();
+            document.getElementById('w_in').value = '';
+            document.getElementById('m_in').value = '';
         }
 
-        function render() {
+        function renderCards() {
             const grid = document.getElementById('cardsGrid');
-            const cards = JSON.parse(localStorage.getItem('bloom_cards') || '[]');
-            grid.innerHTML = cards.map(c => `<div class="vocab-card" onclick="alert('${c.m}')">${c.w}</div>`).join('');
+            const cards = JSON.parse(localStorage.getItem('my_cards') || '[]');
+            grid.innerHTML = cards.map(c => `<div class="vocab-card" onclick="alert('Meaning: ${c.m}')">${c.w}</div>`).join('');
         }
 
+        // تحميل البيانات عند فتح الصفحة
         window.onload = function() {
-            document.getElementById('ar').value = localStorage.getItem('bloom_ar') || '';
-            document.getElementById('en').value = localStorage.getItem('bloom_en') || '';
-            document.getElementById('ai').value = localStorage.getItem('bloom_ai') || '';
-            render();
+            document.getElementById('ar_input').value = localStorage.getItem('ar_data') || '';
+            document.getElementById('en_input').value = localStorage.getItem('en_data') || '';
+            document.getElementById('ai_input').value = localStorage.getItem('ai_data') || '';
+            renderCards();
         };
     </script>
 </body>
