@@ -3,171 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bloom English - My Journey</title>
+    <title>Bloom English 🌸</title>
     <style>
         :root {
-            --accent: #74b9ff; /* أزرق سماوي محفز */
-            --soft-purple: #a29bfe;
-            --text-dark: #2d3436;
-            --bg: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+            /* تدرجات الألوان المستوحاة من صورتك */
+            --bg-gradient: linear-gradient(135deg, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
+            --accent-glow: radial-gradient(circle at 10% 20%, rgba(253, 203, 110, 0.3) 0%, rgba(224, 195, 252, 0.3) 90%);
+            --glass-bg: rgba(255, 255, 255, 0.4);
+            --text-main: #2d3436;
+            --purple-prime: #6c5ce7;
         }
 
         body {
-            background: var(--bg);
+            background: var(--bg-gradient);
             min-height: 100vh;
-            font-family: 'Quicksand', sans-serif; /* خط ناعم ومريح */
             display: flex;
             justify-content: center;
             align-items: center;
+            font-family: 'Quicksand', sans-serif;
             margin: 0;
-            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        .container {
-            background: rgba(255, 255, 255, 0.9);
-            width: 100%;
-            max-width: 500px;
-            padding: 35px;
-            border-radius: 40px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            text-align: center;
-            border: 2px solid white;
+        /* دوائر ملونة في الخلفية لتعزيز شكل الـ Glassmorphism */
+        body::before {
+            content: "";
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: #fab1a0;
+            filter: blur(80px);
+            top: -50px;
+            left: -50px;
+            z-index: -1;
         }
 
-        h1 { 
-            color: var(--text-dark); 
-            font-size: 2rem;
-            margin-bottom: 5px;
-            font-weight: 600;
+        .main-layout {
+            background: var(--glass-bg);
+            width: 92vw;
+            height: 88vh;
+            max-width: 1100px;
+            border-radius: 35px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.05);
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            overflow: hidden;
         }
 
-        p.subtitle {
-            color: #636e72;
-            margin-bottom: 30px;
-            font-size: 0.9rem;
-        }
-
-        h3 { 
-            color: #0984e3; 
-            text-align: left; 
-            font-size: 0.95rem;
-            margin-top: 20px;
+        /* قائمة أيقونات جانبية بسيطة */
+        .side-nav {
+            background: rgba(255, 255, 255, 0.2);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 8px;
+            padding-top: 30px;
+            gap: 30px;
+            border-right: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .content-area {
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        h1 { font-size: 1.8rem; color: var(--purple-prime); margin-bottom: 25px; }
+
+        .input-group {
+            background: rgba(255, 255, 255, 0.6);
+            padding: 20px;
+            border-radius: 25px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
         }
 
         textarea {
             width: 100%;
-            border: 1.5px solid #dfe6e9;
-            background: #ffffff;
-            border-radius: 18px;
-            padding: 15px;
-            box-sizing: border-box;
+            border: none;
+            background: transparent;
+            font-size: 1rem;
             outline: none;
-            font-size: 15px;
-            transition: 0.3s;
-            margin-top: 8px;
+            color: var(--text-main);
+            resize: none;
         }
 
-        textarea:focus {
-            border-color: var(--soft-purple);
-            transform: scale(1.01);
-        }
-
-        .checklist {
-            background: #f1f2f6;
-            padding: 20px;
-            border-radius: 25px;
-            margin-top: 25px;
-            text-align: left;
-        }
-
-        .check-item { 
-            margin-bottom: 10px; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px;
-            color: #2d3436;
-        }
-
-        button {
-            width: 100%;
-            background: linear-gradient(45deg, #0984e3, #74b9ff);
+        .action-btn {
+            background: var(--purple-prime);
             color: white;
             border: none;
-            padding: 18px;
-            border-radius: 50px;
-            font-size: 17px;
-            font-weight: 600;
-            margin-top: 25px;
+            padding: 12px 30px;
+            border-radius: 15px;
             cursor: pointer;
+            font-weight: 600;
             transition: 0.3s;
         }
 
-        button:hover {
-            letter-spacing: 1px;
-            box-shadow: 0 5px 15px rgba(9, 132, 227, 0.4);
+        /* قسم البطاقات في الأسفل */
+        .vault-title { margin-top: 40px; font-weight: 600; }
+        
+        .cards-container {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            padding: 20px 0;
         }
 
-        /* أنيميشن النجاح */
-        @keyframes celebrate {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        .vocab-card {
+            min-width: 140px;
+            height: 180px;
+            background: white;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: 0.3s;
+            cursor: pointer;
+            border: 1px solid rgba(108, 92, 231, 0.1);
         }
-        .animate-save { animation: celebrate 0.4s ease-in-out; }
+
+        .vocab-card:hover { transform: translateY(-5px); }
+
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="container" id="mainCard">
-        <h1>Bloom English 🌸</h1>
-        <p class="subtitle">Small steps, every day.</p>
+    <div class="main-layout">
+        <aside class="side-nav">
+            <span style="font-size: 1.5rem;">🌸</span>
+            <span>🖋️</span>
+            <span>💎</span>
+            <span>⚙️</span>
+        </aside>
 
-        <h3>🖋️ Arabic Soul</h3>
-        <textarea id="arabic" placeholder="اكتبي مشاعرك هنا..." rows="3"></textarea>
+        <main class="content-area">
+            <h1>Bloom English</h1>
+            
+            <div class="input-group">
+                <small style="color: #636e72;">Arabic Soul</small>
+                <textarea id="ar" rows="3" placeholder="Write here..."></textarea>
+            </div>
 
-        <h3>🇺🇸 English Attempt</h3>
-        <textarea id="english" placeholder="Your version in English..." rows="3"></textarea>
+            <div class="input-group">
+                <small style="color: #636e72;">English Version</small>
+                <textarea id="en" rows="3" placeholder="Translate..."></textarea>
+            </div>
 
-        <h3>✨ Polished Gem</h3>
-        <textarea id="ai" placeholder="The improved version..." rows="3"></textarea>
+            <button class="action-btn" onclick="save()">Save Journey</button>
 
-        <div class="checklist">
-            <label class="check-item"><input type="checkbox" id="c1"> I expressed myself</label>
-            <label class="check-item"><input type="checkbox" id="c2"> I learned something new</label>
-        </div>
-
-        <button onclick="saveAndBloom()">Save Progress 🌿</button>
+            <h3 class="vault-title">Vocabulary Vault 💎</h3>
+            <div class="cards-container" id="cardsGrid">
+                </div>
+        </main>
     </div>
 
     <script>
-        function saveAndBloom() {
-            // حفظ البيانات
-            localStorage.setItem('bloom_ar', document.getElementById('arabic').value);
-            localStorage.setItem('bloom_en', document.getElementById('english').value);
-            localStorage.setItem('bloom_ai', document.getElementById('ai').value);
-
-            // إضافة تأثير مرئي للبطاقة
-            const card = document.getElementById('mainCard');
-            card.classList.add('animate-save');
-            setTimeout(() => card.classList.remove('animate-save'), 400);
-
-            // صوت نجاح بسيط
-            const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3');
-            audio.play().catch(() => {});
-
-            alert("Saved! You are growing, Lamia. 🌸");
+        function save() {
+            localStorage.setItem('bloom_ar', document.getElementById('ar').value);
+            localStorage.setItem('bloom_en', document.getElementById('en').value);
+            alert("Your growth has been recorded! ✨");
         }
 
+        // استرجاع البيانات
         window.onload = function() {
-            document.getElementById('arabic').value = localStorage.getItem('bloom_ar') || '';
-            document.getElementById('english').value = localStorage.getItem('bloom_en') || '';
-            document.getElementById('ai').value = localStorage.getItem('bloom_ai') || '';
+            document.getElementById('ar').value = localStorage.getItem('bloom_ar') || '';
+            document.getElementById('en').value = localStorage.getItem('bloom_en') || '';
         };
     </script>
-
 </body>
 </html>
