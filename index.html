@@ -4,34 +4,92 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lamia's Diary</title>
+    <style>
+        body {
+            background-color: #f0f7f9; /* لون سماوي مريح جداً */
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            width: 95%;
+            max-width: 500px;
+            padding: 25px;
+            border-radius: 30px; /* زوايا دائرية ناعمة جداً */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        h1 { color: #2c3e50; font-weight: 400; text-align: center; }
+        h3 { color: #5dade2; margin-top: 20px; font-size: 1.1rem; }
+
+        textarea {
+            width: 100%;
+            border: 1px solid #eef2f3;
+            background-color: #fcfdfe;
+            border-radius: 15px;
+            padding: 12px;
+            box-sizing: border-box; /* ليظل الصندوق داخل الإطار */
+            outline: none;
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        textarea:focus { border-color: #5dade2; background-color: white; }
+
+        .checklist {
+            background: #f8fbff;
+            padding: 15px;
+            border-radius: 20px;
+            margin-top: 20px;
+        }
+
+        .check-item { margin-bottom: 10px; display: block; color: #5a6a75; }
+
+        button {
+            width: 100%;
+            background-color: #5dade2;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50px;
+            font-size: 16px;
+            margin-top: 20px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(93, 173, 226, 0.3);
+        }
+
+        button:hover { background-color: #3498db; }
+    </style>
 </head>
 <body>
 
-    <h1>Lingo Diary</h1>
+    <div class="container">
+        <h1>Lingo Diary</h1>
 
-    <section>
-        <h3>1. Arabic Draft</h3>
-        <textarea placeholder="Write in Arabic..." rows="4" style="width:90%"></textarea>
+        <h3>1. Arabic Draft 🖋️</h3>
+        <textarea placeholder="فضفضي هنا بالعربي..." rows="4"></textarea>
 
-        <h3>2. English Version</h3>
-        <textarea placeholder="Write in English..." rows="4" style="width:90%"></textarea>
+        <h3>2. English Version 🇺🇸</h3>
+        <textarea placeholder="Write it in your English style..." rows="4"></textarea>
 
-        <h3>3. Corrected Version</h3>
-        <textarea placeholder="Paste corrected text here..." rows="4" style="width:90%"></textarea>
-    </section>
+        <h3>3. AI Correction ✨</h3>
+        <textarea placeholder="Paste the polished version here..." rows="4"></textarea>
 
-    <hr>
+        <div class="checklist">
+            <h3>Daily Goals</h3>
+            <label class="check-item"><input type="checkbox"> Wrote in Arabic</label>
+            <label class="check-item"><input type="checkbox"> Tried English translation</label>
+            <label class="check-item"><input type="checkbox"> Checked AI correction</label>
+            <label class="check-item"><input type="checkbox"> Saved new words</label>
+        </div>
 
-    <section>
-        <h3>Daily Checklist</h3>
-        <input type="checkbox"> Did I write today?<br>
-        <input type="checkbox"> Did I translate?<br>
-        <input type="checkbox"> Did I learn new words?<br>
-        <input type="checkbox"> Did I read aloud?
-    </section>
-
-    <br>
-    <button>Save Journal Entry</button>
+        <button>Save Today's Entry</button>
+    </div>
 
 </body>
 </html>
