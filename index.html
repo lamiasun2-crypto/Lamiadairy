@@ -91,8 +91,6 @@
             box-shadow: 0 10px 20px rgba(108, 92, 231, 0.2);
         }
 
-        .action-btn:active { transform: scale(0.95); }
-
         /* البطاقات التعليمية */
         .vault-section { margin-top: 40px; }
         .cards-grid {
@@ -116,22 +114,18 @@
             transition: 0.3s;
             font-weight: 600;
             color: var(--purple-prime);
-            border: 1px solid rgba(108, 92, 231, 0.1);
         }
-
-        .vocab-card:hover { transform: translateY(-5px); background: #fdfbff; }
 
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-
     <div class="main-layout">
         <aside class="side-nav">
             <div style="font-size: 1.8rem;">🌸</div>
-            <div style="cursor: pointer;">🖋️</div>
-            <div style="cursor: pointer;">💎</div>
-            <div style="cursor: pointer;">⚙️</div>
+            <div>🖋️</div>
+            <div>💎</div>
+            <div>⚙️</div>
         </aside>
 
         <main class="content-area">
@@ -139,7 +133,7 @@
             
             <div class="input-group">
                 <label>🖋️ Arabic Thoughts</label>
-                <textarea id="ar" rows="2" placeholder="اكتبي مشاعرك هنا..."></textarea>
+                <textarea id="ar" rows="2" placeholder="اكتبي فضفضتك هنا..."></textarea>
             </div>
 
             <div class="input-group">
@@ -190,9 +184,7 @@
             const grid = document.getElementById('cardsGrid');
             const cards = JSON.parse(localStorage.getItem('bloom_cards') || '[]');
             grid.innerHTML = cards.map((c, i) => `
-                <div class="vocab-card" onclick="alert('${c.m}')">
-                    ${c.w}
-                </div>
+                <div class="vocab-card" onclick="alert('${c.m}')">${c.w}</div>
             `).join('');
         }
 
