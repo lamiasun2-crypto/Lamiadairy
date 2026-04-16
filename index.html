@@ -3,93 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lamia's Diary</title>
+    <title>Bloom English - My Journey</title>
     <style>
+        :root {
+            --accent: #74b9ff; /* أزرق سماوي محفز */
+            --soft-purple: #a29bfe;
+            --text-dark: #2d3436;
+            --bg: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+        }
+
         body {
-            background-color: #f0f7f9; /* لون سماوي مريح جداً */
-            font-family: 'Segoe UI', sans-serif;
+            background: var(--bg);
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif; /* خط ناعم ومريح */
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            padding: 20px;
             margin: 0;
+            padding: 20px;
         }
 
         .container {
-            background: white;
-            width: 95%;
+            background: rgba(255, 255, 255, 0.9);
+            width: 100%;
             max-width: 500px;
-            padding: 25px;
-            border-radius: 30px; /* زوايا دائرية ناعمة جداً */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            padding: 35px;
+            border-radius: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 2px solid white;
         }
 
-        h1 { color: #2c3e50; font-weight: 400; text-align: center; }
-        h3 { color: #5dade2; margin-top: 20px; font-size: 1.1rem; }
+        h1 { 
+            color: var(--text-dark); 
+            font-size: 2rem;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        p.subtitle {
+            color: #636e72;
+            margin-bottom: 30px;
+            font-size: 0.9rem;
+        }
+
+        h3 { 
+            color: #0984e3; 
+            text-align: left; 
+            font-size: 0.95rem;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
         textarea {
             width: 100%;
-            border: 1px solid #eef2f3;
-            background-color: #fcfdfe;
-            border-radius: 15px;
-            padding: 12px;
-            box-sizing: border-box; /* ليظل الصندوق داخل الإطار */
+            border: 1.5px solid #dfe6e9;
+            background: #ffffff;
+            border-radius: 18px;
+            padding: 15px;
+            box-sizing: border-box;
             outline: none;
             font-size: 15px;
             transition: 0.3s;
+            margin-top: 8px;
         }
 
-        textarea:focus { border-color: #5dade2; background-color: white; }
+        textarea:focus {
+            border-color: var(--soft-purple);
+            transform: scale(1.01);
+        }
 
         .checklist {
-            background: #f8fbff;
-            padding: 15px;
-            border-radius: 20px;
-            margin-top: 20px;
+            background: #f1f2f6;
+            padding: 20px;
+            border-radius: 25px;
+            margin-top: 25px;
+            text-align: left;
         }
 
-        .check-item { margin-bottom: 10px; display: block; color: #5a6a75; }
+        .check-item { 
+            margin-bottom: 10px; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+            color: #2d3436;
+        }
 
         button {
             width: 100%;
-            background-color: #5dade2;
+            background: linear-gradient(45deg, #0984e3, #74b9ff);
             color: white;
             border: none;
-            padding: 15px;
+            padding: 18px;
             border-radius: 50px;
-            font-size: 16px;
-            margin-top: 20px;
+            font-size: 17px;
+            font-weight: 600;
+            margin-top: 25px;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(93, 173, 226, 0.3);
+            transition: 0.3s;
         }
 
-        button:hover { background-color: #3498db; }
+        button:hover {
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(9, 132, 227, 0.4);
+        }
+
+        /* أنيميشن النجاح */
+        @keyframes celebrate {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .animate-save { animation: celebrate 0.4s ease-in-out; }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div class="container">
-        <h1>Lingo Diary</h1>
+    <div class="container" id="mainCard">
+        <h1>Bloom English 🌸</h1>
+        <p class="subtitle">Small steps, every day.</p>
 
-        <h3>1. Arabic Draft 🖋️</h3>
-        <textarea placeholder="فضفضي هنا بالعربي..." rows="4"></textarea>
+        <h3>🖋️ Arabic Soul</h3>
+        <textarea id="arabic" placeholder="اكتبي مشاعرك هنا..." rows="3"></textarea>
 
-        <h3>2. English Version 🇺🇸</h3>
-        <textarea placeholder="Write it in your English style..." rows="4"></textarea>
+        <h3>🇺🇸 English Attempt</h3>
+        <textarea id="english" placeholder="Your version in English..." rows="3"></textarea>
 
-        <h3>3. AI Correction ✨</h3>
-        <textarea placeholder="Paste the polished version here..." rows="4"></textarea>
+        <h3>✨ Polished Gem</h3>
+        <textarea id="ai" placeholder="The improved version..." rows="3"></textarea>
 
         <div class="checklist">
-            <h3>Daily Goals</h3>
-            <label class="check-item"><input type="checkbox"> Wrote in Arabic</label>
-            <label class="check-item"><input type="checkbox"> Tried English translation</label>
-            <label class="check-item"><input type="checkbox"> Checked AI correction</label>
-            <label class="check-item"><input type="checkbox"> Saved new words</label>
+            <label class="check-item"><input type="checkbox" id="c1"> I expressed myself</label>
+            <label class="check-item"><input type="checkbox" id="c2"> I learned something new</label>
         </div>
 
-        <button>Save Today's Entry</button>
+        <button onclick="saveAndBloom()">Save Progress 🌿</button>
     </div>
+
+    <script>
+        function saveAndBloom() {
+            // حفظ البيانات
+            localStorage.setItem('bloom_ar', document.getElementById('arabic').value);
+            localStorage.setItem('bloom_en', document.getElementById('english').value);
+            localStorage.setItem('bloom_ai', document.getElementById('ai').value);
+
+            // إضافة تأثير مرئي للبطاقة
+            const card = document.getElementById('mainCard');
+            card.classList.add('animate-save');
+            setTimeout(() => card.classList.remove('animate-save'), 400);
+
+            // صوت نجاح بسيط
+            const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2013/2013-preview.mp3');
+            audio.play().catch(() => {});
+
+            alert("Saved! You are growing, Lamia. 🌸");
+        }
+
+        window.onload = function() {
+            document.getElementById('arabic').value = localStorage.getItem('bloom_ar') || '';
+            document.getElementById('english').value = localStorage.getItem('bloom_en') || '';
+            document.getElementById('ai').value = localStorage.getItem('bloom_ai') || '';
+        };
+    </script>
 
 </body>
 </html>
