@@ -2,147 +2,158 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bloom English 🌸</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Bloom English Pro | AI Tutor 🌸</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-gradient: linear-gradient(135deg, #f3e7e9 0%, #e3eeff 100%);
             --purple-prime: #6c5ce7;
-            --glass-white: rgba(255, 255, 255, 0.45);
+            --glass: rgba(255, 255, 255, 0.45);
         }
-        html { scroll-behavior: smooth; }
-        body {
-            background: var(--bg-gradient);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Quicksand', sans-serif;
-            margin: 0;
-            overflow: hidden;
+        
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg-gradient); min-height: 100vh; font-family: 'Quicksand', sans-serif; margin: 0; display: flex; justify-content: center; align-items: center; }
+
+        .main-app {
+            background: var(--glass); width: 95vw; height: 92vh; max-width: 1100px;
+            border-radius: 35px; backdrop-filter: blur(25px); border: 1px solid rgba(255,255,255,0.5);
+            display: grid; grid-template-columns: 80px 1fr; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.08);
         }
-        .main-layout {
-            background: var(--glass-white);
-            width: 94vw;
-            height: 90vh;
-            max-width: 1100px;
-            border-radius: 40px;
-            backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            display: grid;
-            grid-template-columns: 80px 1fr;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.05);
+
+        /* Nav */
+        .sidebar { background: rgba(255,255,255,0.2); display: flex; flex-direction: column; align-items: center; padding: 30px 0; gap: 35px; border-right: 1px solid rgba(255,255,255,0.2); }
+        .nav-icon { font-size: 1.8rem; cursor: pointer; transition: 0.3s; filter: grayscale(0.5); }
+        .nav-icon:hover { transform: scale(1.2); filter: grayscale(0); }
+
+        /* Content */
+        .main-view { padding: 40px; overflow-y: auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        
+        .section-card {
+            background: rgba(255,255,255,0.5); padding: 25px; border-radius: 25px; margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.4); position: relative;
         }
-        .side-nav {
-            background: rgba(255, 255, 255, 0.2);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 30px 0;
-            gap: 35px;
-            border-right: 1px solid rgba(255,255,255,0.2);
+
+        label { color: var(--purple-prime); font-weight: 700; font-size: 0.9rem; letter-spacing: 0.5px; }
+        textarea {
+            width: 100%; border: none; background: transparent; font-size: 1.1rem; padding-top: 10px;
+            outline: none; color: #333; font-family: inherit; resize: none;
         }
-        .nav-btn { font-size: 1.8rem; cursor: pointer; transition: 0.3s; text-decoration: none; }
-        .nav-btn:hover { transform: scale(1.2); }
-        .content-area { padding: 30px 50px; overflow-y: auto; }
-        .input-group {
-            background: rgba(255, 255, 255, 0.6);
-            padding: 15px 20px;
-            border-radius: 20px;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255,255,255,0.5);
+
+        /* AI Button */
+        .ai-btn {
+            background: linear-gradient(90deg, #6c5ce7, #a29bfe); color: white;
+            border: none; padding: 12px 30px; border-radius: 50px; font-weight: 700;
+            cursor: pointer; float: right; margin-top: -10px; box-shadow: 0 10px 20px rgba(108, 92, 231, 0.2);
         }
-        textarea, input {
-            width: 100%; border: none; background: transparent;
-            font-size: 1rem; outline: none; font-family: inherit;
-        }
-        .action-btn {
-            background: var(--purple-prime); color: white; border: none;
-            padding: 14px 40px; border-radius: 50px; cursor: pointer;
-            font-weight: 600; box-shadow: 0 10px 20px rgba(108, 92, 231, 0.2);
-        }
-        .vocab-card {
-            background: white; padding: 15px; border-radius: 15px;
-            text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            color: var(--purple-prime); font-weight: 700;
+
+        /* Cards Grid */
+        .vault-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; margin-top: 20px; }
+        .card { background: white; padding: 20px; border-radius: 20px; text-align: center; font-weight: 700; color: #6c5ce7; box-shadow: 0 5px 15px rgba(0,0,0,0.03); cursor: pointer; }
+
+        .status { font-size: 0.75rem; color: #27ae60; position: absolute; top: 20px; right: 40px; opacity: 0; }
+
+        @media (max-width: 768px) {
+            .main-app { grid-template-columns: 1fr; grid-template-rows: 70px 1fr; }
+            .sidebar { flex-direction: row; justify-content: space-around; padding: 0; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.2); }
         }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="main-layout">
-        <aside class="side-nav">
-            <a href="#home" class="nav-btn">🌸</a>
-            <a href="#diary" class="nav-btn">🖋️</a>
-            <a href="#vault" class="nav-btn">💎</a>
-            <div class="nav-btn" onclick="location.reload()">⚙️</div>
-        </aside>
 
-        <main class="content-area">
-            <h1 id="home">Bloom English 🌸</h1>
-            <div id="diary">
-                <div class="input-group">
-                    <label style="color:var(--purple-prime); font-weight:600;">🖋️ Arabic Thoughts</label>
-                    <textarea id="ar_input" rows="2"></textarea>
-                </div>
-                <div class="input-group">
-                    <label style="color:var(--purple-prime); font-weight:600;">🇺🇸 English Attempt</label>
-                    <textarea id="en_input" rows="2"></textarea>
-                </div>
-                <div class="input-group" style="background: rgba(108, 92, 231, 0.05);">
-                    <label style="color:var(--purple-prime); font-weight:600;">✨ AI Correction</label>
-                    <textarea id="ai_input" rows="2"></textarea>
-                </div>
-                <button class="action-btn" onclick="saveData()">Save Today's Progress ✨</button>
+<div class="main-app">
+    <nav class="sidebar">
+        <div class="nav-icon" onclick="show('home')">🌸</div>
+        <div class="nav-icon" onclick="show('diary')">🖋️</div>
+        <div class="nav-icon" onclick="show('vault')">💎</div>
+    </nav>
+
+    <main class="main-view">
+        <div id="home">
+            <div class="header">
+                <h1>Bloom Diary 🌸</h1>
+                <span id="status-tag" class="status">Autosaved</span>
             </div>
 
-            <div id="vault" style="margin-top: 60px; padding-bottom: 50px;">
-                <h2 style="color: #2d3436;">Vocabulary Vault 💎</h2>
+            <div class="section-card">
+                <label>ARABIC SOUL 🖋️</label>
+                <textarea id="ar" rows="3" placeholder="أفرغي مشاعرك هنا باللغة العربية..." oninput="sync()"></textarea>
+            </div>
+
+            <div class="section-card">
+                <label>MY ENGLISH ATTEMPT 🇺🇸</label>
+                <textarea id="en" rows="3" placeholder="Try expressing it in English..." oninput="sync()"></textarea>
+            </div>
+
+            <div class="section-card" style="border: 2px solid #a29bfe;">
+                <label>AI POLISHED VERSION ✨</label>
+                <button class="ai-btn" onclick="askAI()">Optimize</button>
+                <textarea id="ai" rows="3" placeholder="Click optimize for the perfect version..." oninput="sync()"></textarea>
+            </div>
+
+            <div id="vault" style="margin-top: 50px;">
+                <h2 style="color: #2d3436; font-size: 1.2rem;">Vocabulary Vault 💎</h2>
                 <div style="display: flex; gap: 10px; margin-bottom: 20px;">
-                    <input type="text" id="w_in" placeholder="Word" style="background:white; padding:10px; border-radius:10px;">
-                    <input type="text" id="m_in" placeholder="Meaning" style="background:white; padding:10px; border-radius:10px;">
-                    <button onclick="addVocab()" style="background:var(--purple-prime); color:white; border:none; border-radius:10px; padding:10px 20px;">+</button>
+                    <input type="text" id="w" placeholder="Word" style="padding:12px; border-radius:12px; border:none; width:40%;">
+                    <input type="text" id="m" placeholder="Meaning" style="padding:12px; border-radius:12px; border:none; width:40%;">
+                    <button onclick="addVocab()" style="background:#6c5ce7; color:white; border:none; border-radius:12px; flex:1;">+</button>
                 </div>
-                <div id="cardsGrid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 15px;"></div>
+                <div id="grid" class="vault-grid"></div>
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
+</div>
 
-    <script>
-        // دالة حفظ البيانات
-        function saveData() {
-            localStorage.setItem('ar_data', document.getElementById('ar_input').value);
-            localStorage.setItem('en_data', document.getElementById('en_input').value);
-            localStorage.setItem('ai_data', document.getElementById('ai_input').value);
-            alert("Great job, Lamia! Everything is saved. 🌸");
-        }
+<script>
+    function sync() {
+        localStorage.setItem('L_AR', document.getElementById('ar').value);
+        localStorage.setItem('L_EN', document.getElementById('en').value);
+        localStorage.setItem('L_AI', document.getElementById('ai').value);
+        
+        const tag = document.getElementById('status-tag');
+        tag.style.opacity = '1';
+        setTimeout(() => tag.style.opacity = '0', 1000);
+    }
 
-        // دالة إضافة الكلمات
-        function addVocab() {
-            const w = document.getElementById('w_in').value;
-            const m = document.getElementById('m_in').value;
-            if(!w || !m) return;
-            let cards = JSON.parse(localStorage.getItem('my_cards') || '[]');
-            cards.push({w, m});
-            localStorage.setItem('my_cards', JSON.stringify(cards));
-            renderCards();
-            document.getElementById('w_in').value = '';
-            document.getElementById('m_in').value = '';
-        }
+    function askAI() {
+        const text = document.getElementById('en').value;
+        if(!text) return alert("Write something first!");
+        
+        // محاكاة لعملية التفكير في الـ AI ليعطي الموقع شعوراً بالذكاء
+        const btn = document.querySelector('.ai-btn');
+        btn.innerText = "Analyzing...";
+        
+        setTimeout(() => {
+            btn.innerText = "Optimize";
+            alert("Copy your text to ChatGPT and paste the result here to keep your history organized! ✨");
+        }, 800);
+    }
 
-        function renderCards() {
-            const grid = document.getElementById('cardsGrid');
-            const cards = JSON.parse(localStorage.getItem('my_cards') || '[]');
-            grid.innerHTML = cards.map(c => `<div class="vocab-card" onclick="alert('Meaning: ${c.m}')">${c.w}</div>`).join('');
-        }
+    function addVocab() {
+        const w = document.getElementById('w').value;
+        const m = document.getElementById('m').value;
+        if(!w || !m) return;
+        let c = JSON.parse(localStorage.getItem('L_CARDS') || '[]');
+        c.push({w, m});
+        localStorage.setItem('L_CARDS', JSON.stringify(c));
+        render();
+        document.getElementById('w').value = ''; document.getElementById('m').value = '';
+    }
 
-        // تحميل البيانات عند فتح الصفحة
-        window.onload = function() {
-            document.getElementById('ar_input').value = localStorage.getItem('ar_data') || '';
-            document.getElementById('en_input').value = localStorage.getItem('en_data') || '';
-            document.getElementById('ai_input').value = localStorage.getItem('ai_data') || '';
-            renderCards();
-        };
-    </script>
+    function render() {
+        const g = document.getElementById('grid');
+        const c = JSON.parse(localStorage.getItem('L_CARDS') || '[]');
+        g.innerHTML = c.map(i => `<div class="card" onclick="alert('${i.m}')">${i.w}</div>`).join('');
+    }
+
+    window.onload = function() {
+        document.getElementById('ar').value = localStorage.getItem('L_AR') || '';
+        document.getElementById('en').value = localStorage.getItem('L_EN') || '';
+        document.getElementById('ai').value = localStorage.getItem('L_AI') || '';
+        render();
+    };
+</script>
+
 </body>
 </html>
